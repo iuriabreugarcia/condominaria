@@ -1,0 +1,8 @@
+{
+  "name": "condominaria-express",
+  "private": true,
+  "scripts": {
+    "build": "npm ci --prefix condominaria-express-api --include=dev && npm ci --prefix condominaria-express-web --include=dev && (cd condominaria-express-api && npm exec -- prisma generate) && npm --prefix condominaria-express-api run build && VITE_API_URL=/api npm --prefix condominaria-express-web run build && node scripts/copiar-portal.cjs",
+    "start": "node server.js"
+  }
+}
