@@ -1,0 +1,47 @@
+import {
+  IsDateString,
+  IsInt,
+  IsOptional,
+  IsString,
+  Length,
+  Matches,
+  MaxLength,
+  Min,
+} from 'class-validator';
+
+export class CreateCobrancaDto {
+  @IsInt()
+  @Min(1)
+  unidadeId!: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  moradorId?: number;
+
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  categoriaId?: number;
+
+  @IsString()
+  @Length(3, 180)
+  descricao!: string;
+
+  @IsString()
+  @Matches(/^\d+(\.\d{1,2})?$/, {
+    message: 'O valor deve ter formato decimal válido, como 420.00.',
+  })
+  valor!: string;
+
+  @IsDateString()
+  competenciaEm!: string;
+
+  @IsDateString()
+  vencimentoEm!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  observacoes?: string;
+}

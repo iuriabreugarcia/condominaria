@@ -1,0 +1,1370 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum PapelCondominio {
+  ADMINISTRADOR
+  SINDICO
+  SUBSINDICO
+  CONSELHEIRO
+  FINANCEIRO
+  PORTEIRO
+  MORADOR
+}
+
+enum TipoUnidade {
+  APARTAMENTO
+  CASA
+  SALA
+  LOJA
+  OUTRA
+}
+
+enum PapelMoradorUnidade {
+  PROPRIETARIO
+  INQUILINO
+  MORADOR
+  DEPENDENTE
+  OUTRO
+}
+
+enum TipoDocumentoVisitante {
+  CPF
+  RG
+  CNH
+  PASSAPORTE
+  OUTRO
+}
+
+enum StatusAutorizacaoVisitante {
+  ATIVA
+  CANCELADA
+  ENCERRADA
+}
+
+enum StatusOcorrencia {
+  ABERTA
+  EM_ANALISE
+  EM_ANDAMENTO
+  AGUARDANDO_MORADOR
+  RESOLVIDA
+  CANCELADA
+}
+
+enum PrioridadeOcorrencia {
+  BAIXA
+  MEDIA
+  ALTA
+  URGENTE
+}
+
+enum StatusComunicado {
+  RASCUNHO
+  PUBLICADO
+  ARQUIVADO
+}
+
+enum PrioridadeComunicado {
+  NORMAL
+  IMPORTANTE
+  URGENTE
+}
+
+enum StatusDocumentoCondominio {
+  RASCUNHO
+  PUBLICADO
+  ARQUIVADO
+}
+
+enum StatusReservaAreaComum {
+  SOLICITADA
+  APROVADA
+  RECUSADA
+  CANCELADA
+  CONCLUIDA
+}
+
+enum TipoCategoriaFinanceira {
+  RECEITA
+  DESPESA
+  AMBOS
+}
+
+enum TipoLancamentoFinanceiro {
+  RECEITA
+  DESPESA
+}
+
+enum StatusLancamentoFinanceiro {
+  PENDENTE
+  PAGO
+  CANCELADO
+}
+
+enum StatusCobrancaCondominial {
+  PENDENTE
+  PAGO
+  CANCELADA
+}
+
+enum TipoVagaGaragem {
+  PRIVATIVA
+  ROTATIVA
+  VISITANTE
+  SERVICO
+  OUTRA
+}
+
+enum TipoVeiculo {
+  CARRO
+  MOTO
+  CAMINHONETE
+  VAN
+  BICICLETA
+  OUTRO
+}
+
+enum TipoEncomendaPortaria {
+  ENCOMENDA
+  CORRESPONDENCIA
+  DOCUMENTO
+  NOTIFICACAO
+  OUTRO
+}
+
+enum StatusEncomendaPortaria {
+  RECEBIDA
+  RETIRADA
+  DEVOLVIDA
+}
+
+enum StatusAutorizacaoPrestador {
+  ATIVA
+  CANCELADA
+  ENCERRADA
+}
+
+enum StatusOrdemServico {
+  ABERTA
+  AGENDADA
+  EM_EXECUCAO
+  CONCLUIDA
+  CANCELADA
+}
+
+enum StatusContratoCondominio {
+  ATIVO
+  ENCERRADO
+  CANCELADO
+}
+
+enum PrioridadeOrdemServico {
+  BAIXA
+  MEDIA
+  ALTA
+  URGENTE
+}
+
+enum StatusAssembleia {
+  RASCUNHO
+  CONVOCADA
+  EM_ANDAMENTO
+  ENCERRADA
+  CANCELADA
+}
+
+enum ModalidadeAssembleia {
+  PRESENCIAL
+  ONLINE
+  HIBRIDA
+}
+
+enum StatusPautaAssembleia {
+  ABERTA
+  DELIBERADA
+  CANCELADA
+}
+
+enum StatusVotacaoAssembleia {
+  RASCUNHO
+  ABERTA
+  ENCERRADA
+  CANCELADA
+}
+
+model Condominio {
+  id       Int     @id @default(autoincrement())
+  nome     String  @db.VarChar(180)
+  slug     String  @unique @db.VarChar(180)
+  cnpj     String? @unique @db.VarChar(20)
+  email    String? @db.VarChar(180)
+  telefone String? @db.VarChar(30)
+
+  pixChave                String? @db.VarChar(180)
+  pixTipo                 String? @db.VarChar(30)
+  beneficiarioPagamento   String? @db.VarChar(180)
+  bancoPagamento          String? @db.VarChar(180)
+  instrucoesPagamento     String? @db.Text
+  mensagemCobrancaPadrao  String? @db.Text
+
+  nomeExibicaoPortal       String? @db.VarChar(180)
+  logoUrl                  String? @db.VarChar(255)
+  mensagemBoasVindasPortal String? @db.Text
+  instrucoesGeraisPortal   String? @db.Text
+  contatosUteisPortal      String? @db.Text
+  prazoPadraoCobrancaDias  Int?
+  instrucoesVisitantes     String? @db.Text
+  instrucoesEncomendas     String? @db.Text
+  politicaReservas         String? @db.Text
+  assinaturaComunicados    String? @db.Text
+
+  cep         String? @db.VarChar(12)
+  logradouro  String? @db.VarChar(180)
+  numero      String? @db.VarChar(30)
+  complemento String? @db.VarChar(120)
+  bairro      String? @db.VarChar(120)
+  cidade      String? @db.VarChar(120)
+  uf          String? @db.Char(2)
+
+  ativo Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  usuarios                 UsuarioCondominio[]
+  blocos                   Bloco[]
+  unidades                 Unidade[]
+  moradores                Morador[]
+  visitantes               Visitante[]
+  autorizacoesVisitante    AutorizacaoVisitante[]
+  registrosAcesso          RegistroAcessoVisitante[]
+  ocorrencias              Ocorrencia[]
+  comunicados              Comunicado[]
+  documentosCondominio     DocumentoCondominio[]
+  areasComuns              AreaComum[]
+  reservasAreasComuns      ReservaAreaComum[]
+  categoriasFinanceiras    CategoriaFinanceira[]
+  lancamentosFinanceiros   LancamentoFinanceiro[]
+  cobrancasCondominiais    CobrancaCondominial[]
+  vagasGaragem             VagaGaragem[]
+  veiculos                 Veiculo[]
+  encomendasPortaria       EncomendaPortaria[]
+  prestadoresServico       PrestadorServico[]
+  autorizacoesPrestador    AutorizacaoPrestador[]
+  registrosAcessoPrestador RegistroAcessoPrestador[]
+  ordensServico            OrdemServico[]
+  contratosCondominio       ContratoCondominio[]
+  assembleias              Assembleia[]
+  votacoesAssembleia       VotacaoAssembleia[]
+
+  presencasAssembleia PresencaAssembleia[]
+
+    historicosFinanceiros HistoricoFinanceiro[] @relation("HistoricosFinanceirosCondominio")
+@@map("condominios")
+}
+
+model Usuario {
+  id        Int     @id @default(autoincrement())
+  nome      String  @db.VarChar(180)
+  email     String  @unique @db.VarChar(180)
+  telefone  String? @db.VarChar(30)
+  senhaHash String? @db.VarChar(255)
+  avatarUrl String? @db.VarChar(255)
+
+  superAdmin    Boolean   @default(false)
+  ativo         Boolean   @default(true)
+  ultimoLoginEm DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominios                      UsuarioCondominio[]
+  autorizacoesVisitante            AutorizacaoVisitante[]        @relation("AutorizacoesVisitanteCriadas")
+  registrosEntradaVisitante        RegistroAcessoVisitante[]     @relation("RegistrosEntradaPorUsuario")
+  registrosSaidaVisitante          RegistroAcessoVisitante[]     @relation("RegistrosSaidaPorUsuario")
+  ocorrenciasCriadas               Ocorrencia[]                  @relation("OcorrenciasCriadas")
+  ocorrenciasHistorico             OcorrenciaHistoricoStatus[]   @relation("OcorrenciasHistoricoUsuario")
+  comunicadosCriados               Comunicado[]                  @relation("ComunicadosCriados")
+  documentosCondominioCriados      DocumentoCondominio[]         @relation("DocumentosCondominioCriados")
+  reservasCriadas                  ReservaAreaComum[]            @relation("ReservasAreasComunsCriadas")
+  reservasAprovadas                ReservaAreaComum[]            @relation("ReservasAreasComunsAprovadas")
+  lancamentosFinanceirosCriados    LancamentoFinanceiro[]        @relation("LancamentosFinanceirosCriados")
+  lancamentosFinanceirosPagos      LancamentoFinanceiro[]        @relation("LancamentosFinanceirosPagos")
+  lancamentosFinanceirosCancelados LancamentoFinanceiro[]        @relation("LancamentosFinanceirosCancelados")
+  cobrancasCriadas                 CobrancaCondominial[]         @relation("CobrancasCriadas")
+  cobrancasPagas                   CobrancaCondominial[]         @relation("CobrancasPagas")
+  cobrancasCanceladas              CobrancaCondominial[]         @relation("CobrancasCanceladas")
+  encomendasRecebidas              EncomendaPortaria[]           @relation("EncomendasRecebidas")
+  encomendasRetiradas              EncomendaPortaria[]           @relation("EncomendasRetiradas")
+  encomendasDevolvidas             EncomendaPortaria[]           @relation("EncomendasDevolvidas")
+  autorizacoesPrestadorCriadas     AutorizacaoPrestador[]        @relation("AutorizacoesPrestadorCriadas")
+  registrosEntradaPrestador        RegistroAcessoPrestador[]     @relation("RegistrosEntradaPrestador")
+  registrosSaidaPrestador          RegistroAcessoPrestador[]     @relation("RegistrosSaidaPrestador")
+  ordensServicoCriadas             OrdemServico[]                @relation("OrdensServicoCriadas")
+  ordensServicoHistorico           OrdemServicoHistoricoStatus[] @relation("OrdensServicoHistoricoUsuario")
+  contratosCondominioCriados       ContratoCondominio[]          @relation("ContratosCondominioCriados")
+  assembleiasCriadas               Assembleia[]                  @relation("AssembleiasCriadas")
+  pautasAssembleiaCriadas          PautaAssembleia[]             @relation("PautasAssembleiaCriadas")
+  votacoesAssembleiaCriadas        VotacaoAssembleia[]           @relation("VotacoesAssembleiaCriadas")
+  votosAssembleiaRegistrados       VotoAssembleia[]              @relation("VotosAssembleiaRegistrados")
+  moradoresVinculados              Morador[]                     @relation("MoradorUsuario")
+
+  presencasAssembleiaRegistradas PresencaAssembleia[] @relation("PresencasAssembleiaRegistradas")
+
+    historicosFinanceiros HistoricoFinanceiro[] @relation("HistoricosFinanceirosUsuario")
+@@map("usuarios")
+}
+
+model UsuarioCondominio {
+  id Int @id @default(autoincrement())
+
+  usuarioId    Int
+  condominioId Int
+
+  papel     PapelCondominio
+  principal Boolean         @default(false)
+  ativo     Boolean         @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  condominio Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+
+  @@unique([usuarioId, condominioId])
+  @@index([condominioId])
+  @@index([usuarioId])
+  @@map("usuarios_condominios")
+}
+
+model Bloco {
+  id           Int     @id @default(autoincrement())
+  condominioId Int
+  nome         String  @db.VarChar(120)
+  descricao    String? @db.VarChar(255)
+  ordem        Int     @default(0)
+  ativo        Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidades   Unidade[]
+
+  @@unique([condominioId, nome])
+  @@index([condominioId])
+  @@map("blocos")
+}
+
+model Unidade {
+  id           Int  @id @default(autoincrement())
+  condominioId Int
+  blocoId      Int?
+
+  numero        String      @db.VarChar(40)
+  identificador String      @db.VarChar(180)
+  tipo          TipoUnidade @default(APARTAMENTO)
+  andar         Int?
+  observacoes   String?     @db.VarChar(255)
+  ativo         Boolean     @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio               Condominio                @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  bloco                    Bloco?                    @relation(fields: [blocoId], references: [id], onDelete: SetNull)
+  moradores                MoradorUnidade[]
+  autorizacoesVisitante    AutorizacaoVisitante[]
+  registrosAcessoVisitante RegistroAcessoVisitante[]
+  ocorrencias              Ocorrencia[]
+  reservasAreasComuns      ReservaAreaComum[]
+  cobrancasCondominiais    CobrancaCondominial[]
+  vagasGaragem             VagaGaragem[]
+  veiculos                 Veiculo[]
+  encomendasPortaria       EncomendaPortaria[]
+  autorizacoesPrestador    AutorizacaoPrestador[]
+  registrosAcessoPrestador RegistroAcessoPrestador[]
+  ordensServico            OrdemServico[]
+  votosAssembleia          VotoAssembleia[]
+
+  presencasAssembleia PresencaAssembleia[]
+
+  @@unique([condominioId, identificador])
+  @@index([condominioId])
+  @@index([blocoId])
+  @@map("unidades")
+}
+
+model Morador {
+  id           Int  @id @default(autoincrement())
+  condominioId Int
+  usuarioId    Int?
+
+  nome     String  @db.VarChar(180)
+  email    String? @db.VarChar(180)
+  telefone String? @db.VarChar(30)
+  ativo    Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+
+  usuario               Usuario?               @relation("MoradorUsuario", fields: [usuarioId], references: [id], onDelete: SetNull)
+  unidades              MoradorUnidade[]
+  autorizacoesVisitante AutorizacaoVisitante[]
+  ocorrencias           Ocorrencia[]
+  reservasAreasComuns   ReservaAreaComum[]
+  cobrancasCondominiais CobrancaCondominial[]
+  veiculos              Veiculo[]
+  encomendasPortaria    EncomendaPortaria[]
+  autorizacoesPrestador AutorizacaoPrestador[]
+  votosAssembleia       VotoAssembleia[]
+
+  presencasAssembleia PresencaAssembleia[]
+
+  @@unique([condominioId, usuarioId])
+  @@index([condominioId])
+  @@map("moradores")
+}
+
+model MoradorUnidade {
+  id        Int @id @default(autoincrement())
+  moradorId Int
+  unidadeId Int
+
+  papel     PapelMoradorUnidade @default(MORADOR)
+  principal Boolean             @default(false)
+  inicioEm  DateTime            @default(now())
+  fimEm     DateTime?
+  ativo     Boolean             @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  morador Morador @relation(fields: [moradorId], references: [id], onDelete: Cascade)
+  unidade Unidade @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+
+  @@unique([moradorId, unidadeId])
+  @@index([moradorId])
+  @@index([unidadeId])
+  @@map("moradores_unidades")
+}
+
+model Visitante {
+  id           Int @id @default(autoincrement())
+  condominioId Int
+
+  nome          String                  @db.VarChar(180)
+  tipoDocumento TipoDocumentoVisitante?
+  documento     String?                 @db.VarChar(60)
+  telefone      String?                 @db.VarChar(30)
+  observacoes   String?                 @db.VarChar(255)
+  ativo         Boolean                 @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio      Condominio                @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  autorizacoes    AutorizacaoVisitante[]
+  registrosAcesso RegistroAcessoVisitante[]
+
+  @@unique([condominioId, documento])
+  @@index([condominioId])
+  @@map("visitantes")
+}
+
+model AutorizacaoVisitante {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  visitanteId        Int
+  unidadeId          Int
+  moradorId          Int?
+  criadoPorUsuarioId Int?
+
+  status      StatusAutorizacaoVisitante @default(ATIVA)
+  inicioEm    DateTime
+  fimEm       DateTime
+  observacoes String?                    @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio                @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  visitante        Visitante                 @relation(fields: [visitanteId], references: [id], onDelete: Cascade)
+  unidade          Unidade                   @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador          Morador?                  @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario Usuario?                  @relation("AutorizacoesVisitanteCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  registrosAcesso  RegistroAcessoVisitante[]
+
+  @@index([condominioId])
+  @@index([visitanteId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([criadoPorUsuarioId])
+  @@map("autorizacoes_visitantes")
+}
+
+model RegistroAcessoVisitante {
+  id                     Int @id @default(autoincrement())
+  condominioId           Int
+  autorizacaoVisitanteId Int
+  visitanteId            Int
+  unidadeId              Int
+
+  entradaEm          DateTime  @default(now())
+  saidaEm            DateTime?
+  observacoesEntrada String?   @db.VarChar(255)
+  observacoesSaida   String?   @db.VarChar(255)
+
+  entradaRegistradaPorId Int?
+  saidaRegistradaPorId   Int?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio           Condominio           @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  autorizacaoVisitante AutorizacaoVisitante @relation(fields: [autorizacaoVisitanteId], references: [id], onDelete: Cascade)
+  visitante            Visitante            @relation(fields: [visitanteId], references: [id], onDelete: Cascade)
+  unidade              Unidade              @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  entradaRegistradaPor Usuario?             @relation("RegistrosEntradaPorUsuario", fields: [entradaRegistradaPorId], references: [id], onDelete: SetNull)
+  saidaRegistradaPor   Usuario?             @relation("RegistrosSaidaPorUsuario", fields: [saidaRegistradaPorId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([autorizacaoVisitanteId])
+  @@index([visitanteId])
+  @@index([unidadeId])
+  @@index([entradaRegistradaPorId])
+  @@index([saidaRegistradaPorId])
+  @@map("registros_acesso_visitantes")
+}
+
+model Ocorrencia {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  unidadeId          Int?
+  moradorId          Int?
+  criadoPorUsuarioId Int?
+
+  titulo      String               @db.VarChar(180)
+  descricao   String               @db.Text
+  categoria   String?              @db.VarChar(120)
+  prioridade  PrioridadeOcorrencia @default(MEDIA)
+  status      StatusOcorrencia     @default(ABERTA)
+  encerradaEm DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio                  @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidade          Unidade?                    @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  morador          Morador?                    @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario Usuario?                    @relation("OcorrenciasCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  historicoStatus  OcorrenciaHistoricoStatus[]
+  ordensServico    OrdemServico[]
+
+  @@index([condominioId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([prioridade])
+  @@map("ocorrencias")
+}
+
+model OcorrenciaHistoricoStatus {
+  id           Int  @id @default(autoincrement())
+  ocorrenciaId Int
+  usuarioId    Int?
+
+  statusAnterior StatusOcorrencia?
+  statusNovo     StatusOcorrencia
+  observacao     String?           @db.VarChar(255)
+
+  criadoEm DateTime @default(now())
+
+  ocorrencia Ocorrencia @relation(fields: [ocorrenciaId], references: [id], onDelete: Cascade)
+  usuario    Usuario?   @relation("OcorrenciasHistoricoUsuario", fields: [usuarioId], references: [id], onDelete: SetNull)
+
+  @@index([ocorrenciaId])
+  @@index([usuarioId])
+  @@map("ocorrencias_historico_status")
+}
+
+model DocumentoCondominio {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  criadoPorUsuarioId Int?
+
+  titulo           String                    @db.VarChar(180)
+  categoria        String?                   @db.VarChar(120)
+  descricao        String?                   @db.Text
+  url              String                    @db.VarChar(500)
+  publicoMoradores Boolean                   @default(true)
+  destaque         Boolean                   @default(false)
+  status           StatusDocumentoCondominio @default(RASCUNHO)
+
+  publicadoEm DateTime?
+  arquivadoEm DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  criadoPorUsuario Usuario?   @relation("DocumentosCondominioCriados", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([categoria])
+  @@index([publicoMoradores])
+  @@index([destaque])
+  @@map("documentos_condominio")
+}
+
+model Comunicado {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  criadoPorUsuarioId Int?
+
+  titulo     String               @db.VarChar(180)
+  conteudo   String               @db.Text
+  categoria  String?              @db.VarChar(120)
+  prioridade PrioridadeComunicado @default(NORMAL)
+  status     StatusComunicado     @default(RASCUNHO)
+  destaque   Boolean              @default(false)
+
+  publicadoEm DateTime?
+  expiraEm    DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  criadoPorUsuario Usuario?   @relation("ComunicadosCriados", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([prioridade])
+  @@map("comunicados")
+}
+
+model ComunicadoLeitura {
+  id           Int      @id @default(autoincrement())
+  condominioId Int
+  comunicadoId Int
+  usuarioId    Int
+  moradorId    Int
+
+  lidoEm      DateTime @default(now())
+  criadoEm    DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@unique([comunicadoId, usuarioId, moradorId], map: "uq_comunicados_leituras")
+  @@index([condominioId], map: "idx_comunicados_leituras_condominio")
+  @@index([comunicadoId], map: "idx_comunicados_leituras_comunicado")
+  @@index([usuarioId], map: "idx_comunicados_leituras_usuario")
+  @@index([moradorId], map: "idx_comunicados_leituras_morador")
+  @@map("comunicados_leituras")
+}
+
+model AreaComum {
+  id           Int @id @default(autoincrement())
+  condominioId Int
+
+  nome           String  @db.VarChar(180)
+  descricao      String? @db.VarChar(255)
+  capacidade     Int?
+  exigeAprovacao Boolean @default(true)
+  permiteReserva Boolean @default(true)
+  observacoes    String? @db.VarChar(255)
+  ativo          Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio Condominio         @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  reservas   ReservaAreaComum[]
+
+  @@unique([condominioId, nome])
+  @@index([condominioId])
+  @@map("areas_comuns")
+}
+
+model ReservaAreaComum {
+  id                   Int  @id @default(autoincrement())
+  condominioId         Int
+  areaComumId          Int
+  unidadeId            Int?
+  moradorId            Int?
+  criadoPorUsuarioId   Int?
+  aprovadoPorUsuarioId Int?
+
+  titulo       String?                @db.VarChar(180)
+  inicioEm     DateTime
+  fimEm        DateTime
+  status       StatusReservaAreaComum @default(SOLICITADA)
+  observacoes  String?                @db.VarChar(255)
+  motivoRecusa String?                @db.VarChar(255)
+
+  aprovadoEm  DateTime?
+  recusadoEm  DateTime?
+  canceladoEm DateTime?
+  concluidoEm DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio         Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  areaComum          AreaComum  @relation(fields: [areaComumId], references: [id], onDelete: Cascade)
+  unidade            Unidade?   @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  morador            Morador?   @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario   Usuario?   @relation("ReservasAreasComunsCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  aprovadoPorUsuario Usuario?   @relation("ReservasAreasComunsAprovadas", fields: [aprovadoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([areaComumId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([criadoPorUsuarioId])
+  @@index([aprovadoPorUsuarioId])
+  @@index([status])
+  @@index([inicioEm])
+  @@index([fimEm])
+  @@map("reservas_areas_comuns")
+}
+
+model CategoriaFinanceira {
+  id           Int @id @default(autoincrement())
+  condominioId Int
+
+  nome      String                  @db.VarChar(120)
+  tipo      TipoCategoriaFinanceira
+  descricao String?                 @db.VarChar(255)
+  ativo     Boolean                 @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio  Condominio             @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  lancamentos LancamentoFinanceiro[]
+
+  @@unique([condominioId, nome, tipo])
+  @@index([condominioId])
+  @@map("categorias_financeiras")
+}
+
+model LancamentoFinanceiro {
+  id                    Int  @id @default(autoincrement())
+  condominioId          Int
+  categoriaId           Int?
+  criadoPorUsuarioId    Int?
+  pagoPorUsuarioId      Int?
+  canceladoPorUsuarioId Int?
+
+  tipo   TipoLancamentoFinanceiro
+  status StatusLancamentoFinanceiro @default(PENDENTE)
+
+  descricao     String    @db.VarChar(180)
+  valor         Decimal   @db.Decimal(12, 2)
+  competenciaEm DateTime
+  vencimentoEm  DateTime?
+  pagoEm        DateTime?
+  canceladoEm   DateTime?
+
+  observacoes        String? @db.VarChar(255)
+  motivoCancelamento String? @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio          Condominio           @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  categoria           CategoriaFinanceira? @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
+  criadoPorUsuario    Usuario?             @relation("LancamentosFinanceirosCriados", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  pagoPorUsuario      Usuario?             @relation("LancamentosFinanceirosPagos", fields: [pagoPorUsuarioId], references: [id], onDelete: SetNull)
+  canceladoPorUsuario Usuario?             @relation("LancamentosFinanceirosCancelados", fields: [canceladoPorUsuarioId], references: [id], onDelete: SetNull)
+  cobrancaCondominial CobrancaCondominial?
+
+  @@index([condominioId])
+  @@index([categoriaId])
+  @@index([criadoPorUsuarioId])
+  @@index([pagoPorUsuarioId])
+  @@index([canceladoPorUsuarioId])
+  @@index([tipo])
+  @@index([status])
+  @@index([competenciaEm])
+  @@index([vencimentoEm])
+    historicosFinanceiros HistoricoFinanceiro[] @relation("HistoricosFinanceirosLancamento")
+@@map("lancamentos_financeiros")
+}
+
+model CobrancaCondominial {
+  id                     Int  @id @default(autoincrement())
+  condominioId           Int
+  unidadeId              Int
+  moradorId              Int?
+  lancamentoFinanceiroId Int? @unique
+  criadoPorUsuarioId     Int?
+  pagoPorUsuarioId       Int?
+  canceladoPorUsuarioId  Int?
+
+  descricao     String                    @db.VarChar(180)
+  valor         Decimal                   @db.Decimal(12, 2)
+  competenciaEm DateTime
+  vencimentoEm  DateTime
+  status        StatusCobrancaCondominial @default(PENDENTE)
+
+  pagoEm             DateTime?
+  canceladoEm        DateTime?
+  observacoes        String?   @db.VarChar(255)
+  motivoCancelamento String?   @db.VarChar(255)
+
+  comprovanteStatus                String?   @db.VarChar(30)
+  comprovanteArquivoNome           String?   @db.VarChar(180)
+  comprovanteArquivoTipo           String?   @db.VarChar(80)
+  comprovanteArquivoDados          String?   @db.LongText
+  comprovanteObservacao            String?   @db.VarChar(255)
+  comprovanteEnviadoEm             DateTime?
+  comprovanteAnalisadoEm           DateTime?
+  comprovanteAnalisadoPorUsuarioId Int?
+  comprovanteMotivoRecusa          String?   @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio           Condominio            @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidade              Unidade               @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador              Morador?              @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  lancamentoFinanceiro LancamentoFinanceiro? @relation(fields: [lancamentoFinanceiroId], references: [id], onDelete: SetNull)
+  criadoPorUsuario     Usuario?              @relation("CobrancasCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  pagoPorUsuario       Usuario?              @relation("CobrancasPagas", fields: [pagoPorUsuarioId], references: [id], onDelete: SetNull)
+  canceladoPorUsuario  Usuario?              @relation("CobrancasCanceladas", fields: [canceladoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([status])
+  @@index([competenciaEm])
+  @@index([vencimentoEm])
+  @@index([comprovanteStatus])
+  @@index([comprovanteEnviadoEm])
+    historicosFinanceiros HistoricoFinanceiro[] @relation("HistoricosFinanceirosCobranca")
+@@map("cobrancas_condominiais")
+}
+
+
+model HistoricoFinanceiro {
+  id                     Int  @id @default(autoincrement())
+  condominioId           Int
+  usuarioId              Int?
+  lancamentoFinanceiroId Int?
+  cobrancaCondominialId  Int?
+
+  acao      String @db.VarChar(80)
+  entidade  String @db.VarChar(40)
+  descricao String @db.VarChar(255)
+  detalhes  String? @db.Text
+
+  criadoEm DateTime @default(now())
+
+  condominio           Condominio             @relation("HistoricosFinanceirosCondominio", fields: [condominioId], references: [id], onDelete: Cascade)
+  usuario              Usuario?               @relation("HistoricosFinanceirosUsuario", fields: [usuarioId], references: [id], onDelete: SetNull)
+  lancamentoFinanceiro LancamentoFinanceiro?  @relation("HistoricosFinanceirosLancamento", fields: [lancamentoFinanceiroId], references: [id], onDelete: SetNull)
+  cobrancaCondominial  CobrancaCondominial?   @relation("HistoricosFinanceirosCobranca", fields: [cobrancaCondominialId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([usuarioId])
+  @@index([lancamentoFinanceiroId])
+  @@index([cobrancaCondominialId])
+  @@index([acao])
+  @@index([entidade])
+  @@index([criadoEm])
+  @@map("historicos_financeiros")
+}
+
+model VagaGaragem {
+  id           Int  @id @default(autoincrement())
+  condominioId Int
+  unidadeId    Int?
+
+  identificador String          @db.VarChar(80)
+  tipo          TipoVagaGaragem @default(PRIVATIVA)
+  descricao     String?         @db.VarChar(255)
+  ativo         Boolean         @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidade    Unidade?   @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  veiculos   Veiculo[]
+
+  @@unique([condominioId, identificador])
+  @@index([condominioId])
+  @@index([unidadeId])
+  @@map("vagas_garagem")
+}
+
+model Veiculo {
+  id            Int  @id @default(autoincrement())
+  condominioId  Int
+  unidadeId     Int
+  moradorId     Int?
+  vagaGaragemId Int?
+
+  tipo        TipoVeiculo
+  placa       String?     @db.VarChar(20)
+  marca       String?     @db.VarChar(80)
+  modelo      String?     @db.VarChar(120)
+  cor         String?     @db.VarChar(60)
+  observacoes String?     @db.VarChar(255)
+  ativo       Boolean     @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio  Condominio   @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidade     Unidade      @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador     Morador?     @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  vagaGaragem VagaGaragem? @relation(fields: [vagaGaragemId], references: [id], onDelete: SetNull)
+
+  @@unique([condominioId, placa])
+  @@index([condominioId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([vagaGaragemId])
+  @@map("veiculos")
+}
+
+model EncomendaPortaria {
+  id                    Int  @id @default(autoincrement())
+  condominioId          Int
+  unidadeId             Int
+  moradorId             Int?
+  recebidoPorUsuarioId  Int?
+  retiradoPorUsuarioId  Int?
+  devolvidoPorUsuarioId Int?
+
+  tipo   TipoEncomendaPortaria   @default(ENCOMENDA)
+  status StatusEncomendaPortaria @default(RECEBIDA)
+
+  descricao        String  @db.VarChar(180)
+  remetente        String? @db.VarChar(180)
+  codigoRastreio   String? @db.VarChar(120)
+  destinatarioNome String? @db.VarChar(180)
+
+  recebidoEm  DateTime  @default(now())
+  retiradoEm  DateTime?
+  devolvidoEm DateTime?
+
+  retiradoPorNome     String? @db.VarChar(180)
+  observacoes         String? @db.VarChar(255)
+  observacoesRetirada String? @db.VarChar(255)
+  motivoDevolucao     String? @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio          Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  unidade             Unidade    @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador             Morador?   @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  recebidoPorUsuario  Usuario?   @relation("EncomendasRecebidas", fields: [recebidoPorUsuarioId], references: [id], onDelete: SetNull)
+  retiradoPorUsuario  Usuario?   @relation("EncomendasRetiradas", fields: [retiradoPorUsuarioId], references: [id], onDelete: SetNull)
+  devolvidoPorUsuario Usuario?   @relation("EncomendasDevolvidas", fields: [devolvidoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([status])
+  @@index([recebidoEm])
+  @@map("encomendas_portaria")
+}
+
+model PrestadorServico {
+  id           Int @id @default(autoincrement())
+  condominioId Int
+
+  nome          String                  @db.VarChar(180)
+  empresa       String?                 @db.VarChar(180)
+  tipoServico   String?                 @db.VarChar(120)
+  tipoDocumento TipoDocumentoVisitante?
+  documento     String?                 @db.VarChar(60)
+  telefone      String?                 @db.VarChar(30)
+  observacoes   String?                 @db.VarChar(255)
+  ativo         Boolean                 @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio      Condominio                @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  autorizacoes    AutorizacaoPrestador[]
+  registrosAcesso RegistroAcessoPrestador[]
+  ordensServico   OrdemServico[]
+  contratosCondominio ContratoCondominio[]
+
+  @@unique([condominioId, documento])
+  @@index([condominioId])
+  @@map("prestadores_servico")
+}
+
+model AutorizacaoPrestador {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  prestadorId        Int
+  unidadeId          Int?
+  moradorId          Int?
+  criadoPorUsuarioId Int?
+
+  status      StatusAutorizacaoPrestador @default(ATIVA)
+  inicioEm    DateTime
+  fimEm       DateTime
+  observacoes String?                    @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio                @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  prestador        PrestadorServico          @relation(fields: [prestadorId], references: [id], onDelete: Cascade)
+  unidade          Unidade?                  @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  morador          Morador?                  @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario Usuario?                  @relation("AutorizacoesPrestadorCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  registrosAcesso  RegistroAcessoPrestador[]
+
+  @@index([condominioId])
+  @@index([prestadorId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([criadoPorUsuarioId])
+  @@map("autorizacoes_prestadores")
+}
+
+model RegistroAcessoPrestador {
+  id                     Int  @id @default(autoincrement())
+  condominioId           Int
+  autorizacaoPrestadorId Int
+  prestadorId            Int
+  unidadeId              Int?
+
+  entradaEm          DateTime  @default(now())
+  saidaEm            DateTime?
+  observacoesEntrada String?   @db.VarChar(255)
+  observacoesSaida   String?   @db.VarChar(255)
+
+  entradaRegistradaPorId Int?
+  saidaRegistradaPorId   Int?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio           Condominio           @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  autorizacaoPrestador AutorizacaoPrestador @relation(fields: [autorizacaoPrestadorId], references: [id], onDelete: Cascade)
+  prestador            PrestadorServico     @relation(fields: [prestadorId], references: [id], onDelete: Cascade)
+  unidade              Unidade?             @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  entradaRegistradaPor Usuario?             @relation("RegistrosEntradaPrestador", fields: [entradaRegistradaPorId], references: [id], onDelete: SetNull)
+  saidaRegistradaPor   Usuario?             @relation("RegistrosSaidaPrestador", fields: [saidaRegistradaPorId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([autorizacaoPrestadorId])
+  @@index([prestadorId])
+  @@index([unidadeId])
+  @@index([entradaRegistradaPorId])
+  @@index([saidaRegistradaPorId])
+  @@map("registros_acesso_prestadores")
+}
+
+model OrdemServico {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  ocorrenciaId       Int?
+  unidadeId          Int?
+  prestadorId        Int?
+  criadoPorUsuarioId Int?
+
+  titulo     String                 @db.VarChar(180)
+  descricao  String                 @db.Text
+  categoria  String?                @db.VarChar(120)
+  prioridade PrioridadeOrdemServico @default(MEDIA)
+  status     StatusOrdemServico     @default(ABERTA)
+
+  agendadaPara DateTime?
+  iniciadaEm   DateTime?
+  concluidaEm  DateTime?
+  canceladaEm  DateTime?
+
+  motivoCancelamento String? @db.VarChar(255)
+  observacoes        String? @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio                    @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  ocorrencia       Ocorrencia?                   @relation(fields: [ocorrenciaId], references: [id], onDelete: SetNull)
+  unidade          Unidade?                      @relation(fields: [unidadeId], references: [id], onDelete: SetNull)
+  prestador        PrestadorServico?             @relation(fields: [prestadorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario Usuario?                      @relation("OrdensServicoCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  historicoStatus  OrdemServicoHistoricoStatus[]
+
+  @@index([condominioId])
+  @@index([ocorrenciaId])
+  @@index([unidadeId])
+  @@index([prestadorId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([prioridade])
+  @@index([agendadaPara])
+  @@map("ordens_servico")
+}
+
+model OrdemServicoHistoricoStatus {
+  id             Int  @id @default(autoincrement())
+  ordemServicoId Int
+  usuarioId      Int?
+
+  statusAnterior StatusOrdemServico?
+  statusNovo     StatusOrdemServico
+  observacao     String?             @db.VarChar(255)
+
+  criadoEm DateTime @default(now())
+
+  ordemServico OrdemServico @relation(fields: [ordemServicoId], references: [id], onDelete: Cascade)
+  usuario      Usuario?     @relation("OrdensServicoHistoricoUsuario", fields: [usuarioId], references: [id], onDelete: SetNull)
+
+  @@index([ordemServicoId])
+  @@index([usuarioId])
+  @@map("ordens_servico_historico_status")
+}
+
+model ContratoCondominio {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  prestadorId        Int?
+  criadoPorUsuarioId Int?
+
+  titulo              String                   @db.VarChar(180)
+  categoria           String?                  @db.VarChar(120)
+  descricao           String?                  @db.Text
+  numeroContrato      String?                  @db.VarChar(120)
+  valorMensal         Decimal?                 @db.Decimal(10, 2)
+  inicioEm            DateTime
+  fimEm               DateTime?
+  renovacaoAutomatica Boolean                  @default(false)
+  status              StatusContratoCondominio @default(ATIVO)
+  observacoes         String?                  @db.Text
+  arquivoUrl          String?                  @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio        @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  prestador        PrestadorServico? @relation(fields: [prestadorId], references: [id], onDelete: SetNull)
+  criadoPorUsuario Usuario?          @relation("ContratosCondominioCriados", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@index([condominioId])
+  @@index([prestadorId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([fimEm])
+  @@map("contratos_condominio")
+}
+
+model Assembleia {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  criadoPorUsuarioId Int?
+
+  titulo     String               @db.VarChar(180)
+  descricao  String?              @db.Text
+  modalidade ModalidadeAssembleia
+  status     StatusAssembleia     @default(RASCUNHO)
+
+  local              String?   @db.VarChar(180)
+  linkOnline         String?   @db.VarChar(255)
+  primeiraChamadaEm  DateTime
+  segundaChamadaEm   DateTime?
+  convocadaEm        DateTime?
+  iniciadaEm         DateTime?
+  encerradaEm        DateTime?
+  canceladaEm        DateTime?
+  motivoCancelamento String?   @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio          @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  criadoPorUsuario Usuario?            @relation("AssembleiasCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  pautas           PautaAssembleia[]
+  votacoes         VotacaoAssembleia[]
+
+  presencas PresencaAssembleia[]
+
+  @@index([condominioId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([primeiraChamadaEm])
+  @@map("assembleias")
+}
+
+model PautaAssembleia {
+  id                 Int  @id @default(autoincrement())
+  assembleiaId       Int
+  criadoPorUsuarioId Int?
+
+  titulo       String                @db.VarChar(180)
+  descricao    String?               @db.Text
+  ordem        Int                   @default(0)
+  status       StatusPautaAssembleia @default(ABERTA)
+  deliberacao  String?               @db.Text
+  deliberadaEm DateTime?
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  assembleia       Assembleia         @relation(fields: [assembleiaId], references: [id], onDelete: Cascade)
+  criadoPorUsuario Usuario?           @relation("PautasAssembleiaCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  votacao          VotacaoAssembleia?
+
+  @@index([assembleiaId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@index([ordem])
+  @@map("pautas_assembleia")
+}
+
+model VotacaoAssembleia {
+  id                 Int  @id @default(autoincrement())
+  condominioId       Int
+  assembleiaId       Int
+  pautaId            Int  @unique
+  criadoPorUsuarioId Int?
+
+  titulo    String                  @db.VarChar(180)
+  descricao String?                 @db.Text
+  status    StatusVotacaoAssembleia @default(RASCUNHO)
+
+  abertaEm           DateTime?
+  encerradaEm        DateTime?
+  canceladaEm        DateTime?
+  motivoCancelamento String?   @db.VarChar(255)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio       Condominio               @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  assembleia       Assembleia               @relation(fields: [assembleiaId], references: [id], onDelete: Cascade)
+  pauta            PautaAssembleia          @relation(fields: [pautaId], references: [id], onDelete: Cascade)
+  criadoPorUsuario Usuario?                 @relation("VotacoesAssembleiaCriadas", fields: [criadoPorUsuarioId], references: [id], onDelete: SetNull)
+  opcoes           OpcaoVotacaoAssembleia[]
+  votos            VotoAssembleia[]
+
+  @@index([condominioId])
+  @@index([assembleiaId])
+  @@index([criadoPorUsuarioId])
+  @@index([status])
+  @@map("votacoes_assembleia")
+}
+
+model OpcaoVotacaoAssembleia {
+  id        Int @id @default(autoincrement())
+  votacaoId Int
+
+  descricao String  @db.VarChar(180)
+  ordem     Int     @default(0)
+  ativo     Boolean @default(true)
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  votacao VotacaoAssembleia @relation(fields: [votacaoId], references: [id], onDelete: Cascade)
+  votos   VotoAssembleia[]
+
+  @@unique([votacaoId, descricao])
+  @@index([votacaoId])
+  @@index([ordem])
+  @@map("opcoes_votacao_assembleia")
+}
+
+model VotoAssembleia {
+  id                     Int  @id @default(autoincrement())
+  votacaoId              Int
+  opcaoId                Int
+  unidadeId              Int
+  moradorId              Int?
+  registradoPorUsuarioId Int?
+
+  observacoes  String?  @db.VarChar(255)
+  registradoEm DateTime @default(now())
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  votacao              VotacaoAssembleia      @relation(fields: [votacaoId], references: [id], onDelete: Cascade)
+  opcao                OpcaoVotacaoAssembleia @relation(fields: [opcaoId], references: [id], onDelete: Cascade)
+  unidade              Unidade                @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador              Morador?               @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  registradoPorUsuario Usuario?               @relation("VotosAssembleiaRegistrados", fields: [registradoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@unique([votacaoId, unidadeId])
+  @@index([votacaoId])
+  @@index([opcaoId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([registradoPorUsuarioId])
+  @@map("votos_assembleia")
+}
+
+model PresencaAssembleia {
+  id                     Int  @id @default(autoincrement())
+  condominioId           Int
+  assembleiaId           Int
+  unidadeId              Int
+  moradorId              Int?
+  registradoPorUsuarioId Int?
+
+  nomeRepresentante      String?  @db.VarChar(180)
+  documentoRepresentante String?  @db.VarChar(60)
+  porProcuracao          Boolean  @default(false)
+  procuracaoObservacoes  String?  @db.VarChar(255)
+  observacoes            String?  @db.VarChar(255)
+  registradoEm           DateTime @default(now())
+
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  condominio           Condominio @relation(fields: [condominioId], references: [id], onDelete: Cascade)
+  assembleia           Assembleia @relation(fields: [assembleiaId], references: [id], onDelete: Cascade)
+  unidade              Unidade    @relation(fields: [unidadeId], references: [id], onDelete: Cascade)
+  morador              Morador?   @relation(fields: [moradorId], references: [id], onDelete: SetNull)
+  registradoPorUsuario Usuario?   @relation("PresencasAssembleiaRegistradas", fields: [registradoPorUsuarioId], references: [id], onDelete: SetNull)
+
+  @@unique([assembleiaId, unidadeId])
+  @@index([condominioId])
+  @@index([assembleiaId])
+  @@index([unidadeId])
+  @@index([moradorId])
+  @@index([registradoPorUsuarioId])
+  @@index([registradoEm])
+  @@map("presencas_assembleia")
+}
+
+model NotificacaoPreferenciaPortal {
+  id           Int      @id @default(autoincrement())
+  condominioId Int
+  usuarioId    Int
+  moradorId    Int
+  tipo         String   @db.VarChar(40)
+  ativo        Boolean  @default(true)
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@unique([condominioId, usuarioId, moradorId, tipo], map: "uq_notificacoes_preferencias")
+  @@index([condominioId], map: "idx_notificacoes_preferencias_condominio")
+  @@index([usuarioId], map: "idx_notificacoes_preferencias_usuario")
+  @@index([moradorId], map: "idx_notificacoes_preferencias_morador")
+  @@map("notificacoes_preferencias")
+}

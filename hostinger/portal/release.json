@@ -1,0 +1,178 @@
+{
+  "app": "Condominaria Express",
+  "ambiente": "produção",
+  "publicadoEm": "2026-06-19T01:03:08.722Z",
+  "publicadoEmLocal": "18/06/2026, 22:03:08",
+  "portalBase": "/portal",
+  "apiBase": "https://api.condominaria.bacuridigital.com/api",
+  "arquivos": {
+    "indexHtml": true,
+    "htaccess": true,
+    "favicon": true,
+    "manifest": true,
+    "og": true,
+    "assets": 48
+  },
+  "assets": [
+    {
+      "nome": "AdminAuditoriaPage-CrKfwOnS.js",
+      "tamanho": "16.0 KB"
+    },
+    {
+      "nome": "AdminComunicacaoPage-dA174b6n.js",
+      "tamanho": "22.5 KB"
+    },
+    {
+      "nome": "AdminConfiguracoesPage-CTmt6k29.js",
+      "tamanho": "23.2 KB"
+    },
+    {
+      "nome": "AdminContratosPage-XxnugAgJ.js",
+      "tamanho": "24.2 KB"
+    },
+    {
+      "nome": "AdminDashboardPage-DS6EKrdk.js",
+      "tamanho": "42.3 KB"
+    },
+    {
+      "nome": "AdminDocumentosPage-tsgh0pad.js",
+      "tamanho": "15.3 KB"
+    },
+    {
+      "nome": "AdminEstruturaPage-DiJXNd-j.js",
+      "tamanho": "34.1 KB"
+    },
+    {
+      "nome": "AdminFinanceiroPage-BeBfB5zm.js",
+      "tamanho": "162.9 KB"
+    },
+    {
+      "nome": "AdminGovernancaPage-C1R6aiEj.js",
+      "tamanho": "134.5 KB"
+    },
+    {
+      "nome": "AdminManutencaoPage-46bw7QkU.js",
+      "tamanho": "25.8 KB"
+    },
+    {
+      "nome": "AdminOcorrenciasPage-ChGbKpne.js",
+      "tamanho": "17.9 KB"
+    },
+    {
+      "nome": "AdminPortariaPage-BoooKAta.js",
+      "tamanho": "39.5 KB"
+    },
+    {
+      "nome": "AdminPrestadoresPage-B0s_jK4I.js",
+      "tamanho": "18.9 KB"
+    },
+    {
+      "nome": "AdminRelatoriosPage-D2YoQDfR.js",
+      "tamanho": "16.7 KB"
+    },
+    {
+      "nome": "AdminReservasPage-DekpTmst.js",
+      "tamanho": "27.4 KB"
+    },
+    {
+      "nome": "AdminShell-D3tIbuve.js",
+      "tamanho": "9.21 KB"
+    },
+    {
+      "nome": "AdminUsuariosPage-CVGh0_hQ.js",
+      "tamanho": "21.8 KB"
+    },
+    {
+      "nome": "AppShell-BnKALJVr.js",
+      "tamanho": "34.6 KB"
+    },
+    {
+      "nome": "AssembleiasPage-D9NdyyA6.js",
+      "tamanho": "40.5 KB"
+    },
+    {
+      "nome": "CobrancasPage-B2iinANY.js",
+      "tamanho": "32.5 KB"
+    },
+    {
+      "nome": "ComunicadosPage-DdZ59l7R.js",
+      "tamanho": "18.2 KB"
+    },
+    {
+      "nome": "DashboardPage-BvRM0lPA.js",
+      "tamanho": "18.5 KB"
+    },
+    {
+      "nome": "DemoExperienceBanner-BHhPTf03.js",
+      "tamanho": "2.65 KB"
+    },
+    {
+      "nome": "DocumentosPage-B2M3Hk2D.js",
+      "tamanho": "12.7 KB"
+    },
+    {
+      "nome": "EncomendasPage-CW2E7ys0.js",
+      "tamanho": "19.0 KB"
+    },
+    {
+      "nome": "FeedbackState-BwyfM85p.js",
+      "tamanho": "2.93 KB"
+    },
+    {
+      "nome": "FilteredEmptyState-67qUwHFV.js",
+      "tamanho": "4.07 KB"
+    },
+    {
+      "nome": "LoginPage-DFRFkWjz.js",
+      "tamanho": "11.8 KB"
+    },
+    {
+      "nome": "NotFoundPage-CfU4HQZS.js",
+      "tamanho": "1.44 KB"
+    },
+    {
+      "nome": "OcorrenciasPage-BrN8HIAd.js",
+      "tamanho": "25.5 KB"
+    },
+    {
+      "nome": "PageHeader-C16sV3Ki.js",
+      "tamanho": "8.58 KB"
+    },
+    {
+      "nome": "PageSkeleton-DFaCqReA.js",
+      "tamanho": "1.28 KB"
+    },
+    {
+      "nome": "Pagination-BaGc7Zwj.js",
+      "tamanho": "2.10 KB"
+    },
+    {
+      "nome": "PerfilPage-GLOMJgw1.js",
+      "tamanho": "14.3 KB"
+    },
+    {
+      "nome": "ReservasPage-BmZPAJYa.js",
+      "tamanho": "30.8 KB"
+    },
+    {
+      "nome": "VisitantesPage-lxzs8oQ8.js",
+      "tamanho": "26.1 KB"
+    },
+    {
+      "nome": "VotacoesPage-3xkdoccO.js",
+      "tamanho": "40.9 KB"
+    },
+    {
+      "nome": "classNames-CN4lTu6a.js",
+      "tamanho": "68.0 B"
+    },
+    {
+      "nome": "formDraft-lKlZVS92.js",
+      "tamanho": "292.0 B"
+    },
+    {
+      "nome": "index-AwOOudIF.js",
+      "tamanho": "23.0 KB"
+    }
+  ]
+}

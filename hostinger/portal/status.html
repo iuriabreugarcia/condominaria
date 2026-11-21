@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Status - Condominaria Express</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fff7ed, #ffffff, #ffedd5);
+      color: #0f172a;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    .card {
+      border: 1px solid #fed7aa;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: #f97316;
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 4vw, 2.3rem);
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    h2 {
+      margin: 24px 0 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: #64748b;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .box {
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      border-radius: 20px;
+      padding: 14px;
+      min-width: 0;
+    }
+
+    .label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    .value {
+      margin-top: 7px;
+      font-size: 1rem;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .ok { color: #16a34a; }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 0 14px;
+      background: #f97316;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 20px, 1120px);
+        padding: 18px 0;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="card">
+      <div class="brand">
+        <div class="logo">🏢</div>
+        <div>
+          <h1>Condominaria Express</h1>
+          <p class="subtitle">Status de publicação, assets, release e histórico recente de produção.</p>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="box">
+          <div class="label">Publicação</div>
+          <div class="value">18/06/2026, 22:03:08</div>
+        </div>
+
+        <div class="box">
+          <div class="label">Portal</div>
+          <div class="value ok">/portal ativo</div>
+        </div>
+
+        <div class="box">
+          <div class="label">Assets</div>
+          <div class="value">48 arquivo(s)</div>
+        </div>
+
+        <div class="box">
+          <div class="label">Favicon</div>
+          <div class="value">OK</div>
+        </div>
+
+        <div class="box">
+          <div class="label">Manifest</div>
+          <div class="value">OK</div>
+        </div>
+
+        <div class="box">
+          <div class="label">Open Graph</div>
+          <div class="value">OK</div>
+        </div>
+      </div>
+
+      <div class="links">
+        <a class="button" href="/portal/">Abrir portal</a>
+        <a class="button secondary" href="/portal/admin">Admin</a>
+        <a class="button secondary" href="/portal/dashboard">Morador</a>
+        <a class="button secondary" href="/portal/release.json">release.json</a>
+        <a class="button secondary" href="/portal/release-history.json">release-history.json</a>
+      </div>
+
+      <h2>Histórico recente</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Publicação</th>
+            <th>Assets</th>
+            <th>Index</th>
+            <th>.htaccess</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>18/06/2026, 22:03:08</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 21:46:58</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 17:24:24</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 16:20:03</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 16:13:20</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 13:42:06</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>18/06/2026, 12:39:01</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>17/06/2026, 21:19:11</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>17/06/2026, 20:58:22</td><td>48</td><td>OK</td><td>OK</td></tr>
+<tr><td>16/06/2026, 22:11:31</td><td>48</td><td>OK</td><td>OK</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Assets publicados</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Tamanho</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>AdminAuditoriaPage-CrKfwOnS.js</td><td>16.0 KB</td></tr>
+<tr><td>AdminComunicacaoPage-dA174b6n.js</td><td>22.5 KB</td></tr>
+<tr><td>AdminConfiguracoesPage-CTmt6k29.js</td><td>23.2 KB</td></tr>
+<tr><td>AdminContratosPage-XxnugAgJ.js</td><td>24.2 KB</td></tr>
+<tr><td>AdminDashboardPage-DS6EKrdk.js</td><td>42.3 KB</td></tr>
+<tr><td>AdminDocumentosPage-tsgh0pad.js</td><td>15.3 KB</td></tr>
+<tr><td>AdminEstruturaPage-DiJXNd-j.js</td><td>34.1 KB</td></tr>
+<tr><td>AdminFinanceiroPage-BeBfB5zm.js</td><td>162.9 KB</td></tr>
+<tr><td>AdminGovernancaPage-C1R6aiEj.js</td><td>134.5 KB</td></tr>
+<tr><td>AdminManutencaoPage-46bw7QkU.js</td><td>25.8 KB</td></tr>
+<tr><td>AdminOcorrenciasPage-ChGbKpne.js</td><td>17.9 KB</td></tr>
+<tr><td>AdminPortariaPage-BoooKAta.js</td><td>39.5 KB</td></tr>
+<tr><td>AdminPrestadoresPage-B0s_jK4I.js</td><td>18.9 KB</td></tr>
+<tr><td>AdminRelatoriosPage-D2YoQDfR.js</td><td>16.7 KB</td></tr>
+<tr><td>AdminReservasPage-DekpTmst.js</td><td>27.4 KB</td></tr>
+<tr><td>AdminShell-D3tIbuve.js</td><td>9.21 KB</td></tr>
+<tr><td>AdminUsuariosPage-CVGh0_hQ.js</td><td>21.8 KB</td></tr>
+<tr><td>AppShell-BnKALJVr.js</td><td>34.6 KB</td></tr>
+<tr><td>AssembleiasPage-D9NdyyA6.js</td><td>40.5 KB</td></tr>
+<tr><td>CobrancasPage-B2iinANY.js</td><td>32.5 KB</td></tr>
+<tr><td>ComunicadosPage-DdZ59l7R.js</td><td>18.2 KB</td></tr>
+<tr><td>DashboardPage-BvRM0lPA.js</td><td>18.5 KB</td></tr>
+<tr><td>DemoExperienceBanner-BHhPTf03.js</td><td>2.65 KB</td></tr>
+<tr><td>DocumentosPage-B2M3Hk2D.js</td><td>12.7 KB</td></tr>
+<tr><td>EncomendasPage-CW2E7ys0.js</td><td>19.0 KB</td></tr>
+<tr><td>FeedbackState-BwyfM85p.js</td><td>2.93 KB</td></tr>
+<tr><td>FilteredEmptyState-67qUwHFV.js</td><td>4.07 KB</td></tr>
+<tr><td>LoginPage-DFRFkWjz.js</td><td>11.8 KB</td></tr>
+<tr><td>NotFoundPage-CfU4HQZS.js</td><td>1.44 KB</td></tr>
+<tr><td>OcorrenciasPage-BrN8HIAd.js</td><td>25.5 KB</td></tr>
+<tr><td>PageHeader-C16sV3Ki.js</td><td>8.58 KB</td></tr>
+<tr><td>PageSkeleton-DFaCqReA.js</td><td>1.28 KB</td></tr>
+<tr><td>Pagination-BaGc7Zwj.js</td><td>2.10 KB</td></tr>
+<tr><td>PerfilPage-GLOMJgw1.js</td><td>14.3 KB</td></tr>
+<tr><td>ReservasPage-BmZPAJYa.js</td><td>30.8 KB</td></tr>
+<tr><td>VisitantesPage-lxzs8oQ8.js</td><td>26.1 KB</td></tr>
+<tr><td>VotacoesPage-3xkdoccO.js</td><td>40.9 KB</td></tr>
+<tr><td>classNames-CN4lTu6a.js</td><td>68.0 B</td></tr>
+<tr><td>formDraft-lKlZVS92.js</td><td>292.0 B</td></tr>
+<tr><td>index-AwOOudIF.js</td><td>23.0 KB</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

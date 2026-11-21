@@ -27,6 +27,6 @@ Execute `npm ci` e `npm run build` em `condominaria-express-web/` para gerar o p
 
 ## Implantação conjunta na Hostinger
 
-Use a raiz do repositório (`./`), npm, Node.js 22 ou 24, o comando de build `npm run build` e o arquivo de entrada `server.js`. O build gera o cliente Prisma, compila a API e inclui o frontend na saída servida pelo NestJS.
+Selecione `hostinger` como diretório raiz no hPanel. Use npm, Node.js 22 ou 24, o comando de build `npm run build` e o arquivo de entrada `server.js`. O build gera o cliente Prisma, compila a API e inclui o frontend na saída servida pelo NestJS.
 
 Configure `DATABASE_URL` e `JWT_SECRET` nas variáveis de ambiente do site. A raiz redireciona para `/portal/` e o frontend usa `/api` na mesma origem. Após implantar, confira `/api/health`, abra `/portal/login` e teste o login.

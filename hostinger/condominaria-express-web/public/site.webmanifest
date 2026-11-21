@@ -1,0 +1,17 @@
+{
+  "name": "Condominaria Express",
+  "short_name": "Condominaria",
+  "description": "Tudo que o condomínio precisa em um só sistema.",
+  "start_url": "/portal/",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/portal/favicon.svg",
+      "sizes": "128x128",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
