@@ -1,48 +1,60 @@
-const senhaDemoPublica = import.meta.env.VITE_PUBLIC_DEMO_PASSWORD ?? '';
+import { useEffect, useState } from 'react';
+
+type DemoConfig = { emails: Record<string, string>; password: string };
+
 
 const perfisDemo = [
   {
     papel: 'Administrador',
+    chave: 'ADMIN',
     email: import.meta.env.VITE_DEMO_EMAIL_ADMIN,
     descricao: 'Visão completa do painel administrativo.',
   },
   {
     papel: 'Síndico',
+    chave: 'SINDICO',
     email: import.meta.env.VITE_DEMO_EMAIL_SINDICO,
     descricao: 'Gestão diária, comunicados, ocorrências e governança.',
   },
   {
     papel: 'Financeiro',
+    chave: 'FINANCEIRO',
     email: import.meta.env.VITE_DEMO_EMAIL_FINANCEIRO,
     descricao: 'Cobranças, comprovantes e indicadores financeiros.',
   },
   {
     papel: 'Portaria',
+    chave: 'PORTARIA',
     email: import.meta.env.VITE_DEMO_EMAIL_PORTARIA,
     descricao: 'Visitantes, encomendas e ciência operacional.',
   },
   {
     papel: 'Manutenção',
+    chave: 'MANUTENCAO',
     email: import.meta.env.VITE_DEMO_EMAIL_MANUTENCAO,
     descricao: 'Ocorrências, prestadores e ordens de serviço.',
   },
   {
     papel: 'Comunicação',
+    chave: 'COMUNICACAO',
     email: import.meta.env.VITE_DEMO_EMAIL_COMUNICACAO,
     descricao: 'Comunicados, documentos e relacionamento.',
   },
   {
     papel: 'Conselho',
+    chave: 'CONSELHO',
     email: import.meta.env.VITE_DEMO_EMAIL_CONSELHO,
     descricao: 'Acompanhamento institucional e governança.',
   },
   {
     papel: 'Morador',
+    chave: 'MORADOR',
     email: import.meta.env.VITE_DEMO_EMAIL_MORADOR,
     descricao: 'Portal do Morador, cobranças, reservas e votações.',
   },
   {
     papel: 'Morador 2',
+    chave: 'MORADOR_2',
     email: import.meta.env.VITE_DEMO_EMAIL_MORADOR_2,
     descricao: 'Segundo morador para testes paralelos.',
   },
@@ -53,7 +65,23 @@ interface DemoLoginProfilesProps {
 }
 
 export function DemoLoginProfiles({ onSelectProfile }: DemoLoginProfilesProps) {
-  const perfisDisponiveis = perfisDemo.filter((perfil) => perfil.email?.trim());
+  const [demoConfig, setDemoConfig] = useState<DemoConfig>();
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}demo-config.json`, { signal: controller.signal })
+      .then((response) => response.ok ? response.json() : undefined)
+      .then((config: DemoConfig | undefined) => {
+        if (config?.emails && Object.keys(config.emails).length) setDemoConfig(config);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
+
+  const senhaDemoPublica = demoConfig?.password ?? import.meta.env.VITE_PUBLIC_DEMO_PASSWORD ?? '';
+  const perfisDisponiveis = perfisDemo
+    .map((perfil) => ({ ...perfil, email: demoConfig?.emails[perfil.chave] ?? perfil.email }))
+    .filter((perfil) => perfil.email?.trim());
 
   if (!perfisDisponiveis.length) {
     return null;

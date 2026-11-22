@@ -3027,3 +3027,12 @@ main h4 {
   color: white;
   font-weight: 700;
 }
+
+.login-demo-layout__profiles:empty {
+  display: none;
+}
+
+[data-login-sem-coluna-institucional="true"] .login-demo-layout:not(:has(.demo-login-panel)) {
+  grid-template-columns: minmax(0, 1fr) !important;
+  max-width: 26rem !important;
+}

@@ -82,3 +82,15 @@ details p { margin: .65rem 0 0; }
   .three, .modules { grid-template-columns: 1fr; }
   footer .wrap { align-items: flex-start; flex-direction: column; }
 }
+
+.price > span,
+.price > strong {
+  display: block;
+}
+
+.price > strong {
+  margin: .3rem 0 .9rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  white-space: nowrap;
+}

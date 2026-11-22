@@ -14,6 +14,22 @@ async function bootstrap() {
   const portalIndex = join(portalDirectory, 'index.html');
 
   if (existsSync(portalIndex)) {
+    app.use('/portal/demo-config.json', (request: Request, response: Response, next: NextFunction) => {
+      if (request.method !== 'GET' || request.path !== '/') return next();
+
+      const roles = ['ADMIN', 'SINDICO', 'FINANCEIRO', 'PORTARIA', 'MANUTENCAO', 'COMUNICACAO', 'CONSELHO', 'MORADOR', 'MORADOR_2'];
+      const emails = Object.fromEntries(roles.flatMap((role) => {
+        const email = process.env[`VITE_DEMO_EMAIL_${role}`]?.trim();
+        return email ? [[role, email]] : [];
+      }));
+
+      return response.set('Cache-Control', 'no-store').json({
+        emails,
+        password: Object.keys(emails).length ? process.env.VITE_PUBLIC_DEMO_PASSWORD ?? '' : '',
+      });
+    });
+
+
     app.use('/portal', serveStatic(portalDirectory));
     app.use('/portal', (request: Request, response: Response, next: NextFunction) => {
       if (
