@@ -289,9 +289,9 @@ export function LoginPage() {
             <div className="login-demo-layout" data-login-demo-layout="true">
             <aside className="login-demo-layout__profiles" aria-label="Perfis demo de acesso">
               <DemoLoginProfiles
-                          onSelectProfile={(emailDemo) => {
+                          onSelectProfile={(emailDemo, senhaDemo) => {
                             setEmail(emailDemo);
-                            setSenha('');
+                            setSenha(senhaDemo);
                           }}
                         />
             </aside>

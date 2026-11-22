@@ -1,3 +1,5 @@
+const senhaDemoPublica = import.meta.env.VITE_PUBLIC_DEMO_PASSWORD ?? '';
+
 const perfisDemo = [
   {
     papel: 'Administrador',
@@ -47,7 +49,7 @@ const perfisDemo = [
 ];
 
 interface DemoLoginProfilesProps {
-  onSelectProfile: (email: string) => void;
+  onSelectProfile: (email: string, senha: string) => void;
 }
 
 export function DemoLoginProfiles({ onSelectProfile }: DemoLoginProfilesProps) {
@@ -64,7 +66,7 @@ export function DemoLoginProfiles({ onSelectProfile }: DemoLoginProfilesProps) {
         <h2>Escolha um perfil demo</h2>
         <p>
           Use os acessos abaixo para apresentar o Condominaria Express por tipo de
-          usuário. Informe a senha do perfil para continuar.
+          usuário. {senhaDemoPublica ? <>Senha de demonstração: <strong>{senhaDemoPublica}</strong></> : 'Informe a senha do perfil para continuar.'}
         </p>
       </div>
 
@@ -74,7 +76,7 @@ export function DemoLoginProfiles({ onSelectProfile }: DemoLoginProfilesProps) {
             key={perfil.email}
             type="button"
             className="demo-login-card"
-            onClick={() => onSelectProfile(perfil.email)}
+            onClick={() => onSelectProfile(perfil.email, senhaDemoPublica)}
             title={`Preencher login de ${perfil.papel}`}
           >
             <span className="demo-login-card__role">{perfil.papel}</span>
@@ -85,7 +87,7 @@ export function DemoLoginProfiles({ onSelectProfile }: DemoLoginProfilesProps) {
       </div>
 
       <p className="demo-login-panel__note">
-        Clique em um perfil para preencher o e-mail.
+        {senhaDemoPublica ? 'Clique em um perfil para preencher o e-mail e a senha.' : 'Clique em um perfil para preencher o e-mail.'}
       </p>
     </section>
   );
